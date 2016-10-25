@@ -71,9 +71,10 @@ $ sudo systemctl restart httpd
 
 Access in your browser
 
-```
 
-PROJECT_NAME.localhost 
+```bash
+
+PROJECT_NAME.localhost/
 
 #must be a zfskeleton theme
 
