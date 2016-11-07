@@ -200,15 +200,11 @@ $ rpm -Uvh jdk-8u111-linux-x64.rpm
 #java
 $ alternatives --install /usr/bin/java java /usr/java/latest/jre/bin/java 200000
 
-#javaws
-$ alternatives --install /usr/bin/javaws javaws /usr/java/latest/jre/bin/javaws 200000
- 
 #Java Browser (Mozilla) Plugin 64-bit
 $ alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/latest/jre/lib/amd64/libnpjp2.so 200000
  
 #Install javac
 $ alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 200000
-$ alternatives --install /usr/bin/jar jar /usr/java/latest/bin/jar 200000
 
 # export JAVA_HOME JDK/JRE 
 $ export JAVA_HOME="/usr/java/latest" 
@@ -262,6 +258,18 @@ $ sudo chmod +x /usr/local/PhpStorm/bin/phpstorm.sh
 $ /usr/local/PhpStorm/bin/phpstorm.sh
 
 ```
+
+****************************************************************
+
+Install Anstah Community (UML)
+
+```bash
+
+$ su -
+$ rpm -ivh http://cdn.change-vision.com/files/astah-community-7.1.0.f2c212-0.noarch.rpm
+
+```
+
 
 ****************************************************************
 
