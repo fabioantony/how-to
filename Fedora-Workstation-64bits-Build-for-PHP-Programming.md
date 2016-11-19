@@ -87,7 +87,7 @@ $ uname -r
 $ dnf install -y binutils gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
  
 #Install VirtualBox
-$ dnf install -y VirtualBox-5.0
+$ dnf install -y VirtualBox-5.1
 
 #Rebuild Kernel modules
 $ /usr/lib/virtualbox/vboxdrv.sh setup
