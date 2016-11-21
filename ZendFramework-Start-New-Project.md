@@ -19,6 +19,7 @@ Configure Apache vhosts
 <VirtualHost *:80>
     ServerName PROJECT_NAME.localhost
     DocumentRoot /var/www/PROJECT_NAME/public
+    SetEnv APPLICATION_ENV "development"
     <Directory /var/www/PROJECT_NAME/public>
         DirectoryIndex index.php
         AllowOverride All
@@ -143,6 +144,17 @@ $ sudo /sbin/restorecon -R /var/www/PROJECT_NAME
 
 ********************************************
 
+Edit file public/index.php and add:
+
+    /**
+     * Display all errors when APPLICATION_ENV is development.
+    */
+    if ($_SERVER['APPLICATION_ENV'] == 'development') {
+        error_reporting(E_ALL);
+        ini_set("display_errors", 1);
+    }
+    
+********************************************
 ##Doctrine Configuration
 
 ********************************************
