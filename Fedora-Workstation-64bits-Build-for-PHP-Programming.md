@@ -249,8 +249,9 @@ Install PHPStorm IDE
 ```bash
 
 #check last version
-$ wget https://download.jetbrains.com/webide/PhpStorm-2016.2.2.tar.gz
-$ tar -vzxf PhpStorm-2016.2.2.tar.gz
+$ wget https://download-cf.jetbrains.com/webide/PhpStorm-2016.3.tar.gz
+$ tar -vzxf PhpStorm-2016.3.tar.gz
+$ rm -R PhpStorm-2016.3.tar.gz
 $ sudo mkdir /usr/local/PhpStorm
 $ sudo chown YOUR_USERNAME /usr/local/PhpStorm
 $ mv -r PhpStorm-*/* /usr/local/PhpStorm/

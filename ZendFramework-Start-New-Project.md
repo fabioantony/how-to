@@ -230,10 +230,11 @@ Ex-2.:
          'username' => 'PROJECT_NAMEUser',
          'password' => 'PROJECT_NAMEPassword',
          'dsn'            => 'mysql:dbname=PROJECT_NAME;host=localhost',
-         'driver_options' => array(
+         'driver_options' => [
              PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
          ],
-     ];
+    ],
+];
 ```
 
 ********************************************
