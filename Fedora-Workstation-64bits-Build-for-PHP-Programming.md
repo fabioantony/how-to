@@ -254,7 +254,7 @@ $ tar -vzxf PhpStorm-2016.3.tar.gz
 $ rm PhpStorm-2016.3.tar.gz
 $ sudo mkdir /usr/local/PhpStorm
 $ sudo chown YOUR_USERNAME /usr/local/PhpStorm
-$ mv -r PhpStorm-*/* /usr/local/PhpStorm/
+$ mv PhpStorm-* /usr/local/PhpStorm/
 $ sudo chmod +x /usr/local/PhpStorm/bin/phpstorm.sh
 $ /usr/local/PhpStorm/bin/phpstorm.sh
 
