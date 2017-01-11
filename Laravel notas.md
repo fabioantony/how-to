@@ -26,6 +26,10 @@ Gere a documentação
 
 	php artisan clear-compiled
 	php artisan ide-helper:generate
+	
+Gerar Um Controller
+
+	php artisan make:controller NomeController
 
 
     
