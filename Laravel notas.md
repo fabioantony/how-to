@@ -142,7 +142,9 @@ Visualizar comandos do laravel installer
 	
 ##Convenções
 
-Se uma Model tem nome de user no banco de dados sua tabela devera estar no plural com o nome de users
+Se uma Model tem nome de user no banco de dados sua tabela devera estar no plural com o nome de users.
+
+
 	
 ##Geral
 
