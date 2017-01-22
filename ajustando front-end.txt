@@ -1,0 +1,184 @@
+Install Git
+
+$ sudo dnf install -y git git-gui
+
+Configurar o git
+
+# git config --global user.name “o nome que você que utilizar”
+# git config --global user.email “seu e-mail @ email”
+
+--------------
+
+Install Ruby on Rails
+
+$ sudo dnf group install -y "C Development Tools and Libraries"
+$ sudo dnf install -y gcc libxml2-devel sqlite-devel ruby ruby-devel 
+$ sudo gem install rails
+
+$ ruby -v
+$ rails -v
+
+----------------------------
+
+Install NVM (Node Version Manager)
+
+(http://www.liquidweb.com/kb/how-to-install-nvm-node-version-manager-on-fedora-23/)
+
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+$ source ~/.bashrc
+$ nvm --version
+
+-----
+
+Install Node.js
+
+(https://www.liquidweb.com/kb/how-to-install-node-js-on-fedora-23/)
+
+$ nvm ls-remote
+(observe a ultima versão)
+
+Instale a ultima versão estavél do node.js
+$ nvm install stable
+
+Mostra a versão em uso
+$ nvm current
+
+Listas pacotes node disponivél
+$ nvm ls
+
+Mudar a versão do node
+$ nvm use 0.12.9
+
+---------------
+
+
+Install Sass
+
+$ sudo su -c "gem install sass"
+
+---------------
+
+Install Compass
+$ sudo gem update --system
+$ sudo gem install compass
+
+
+----------------------------
+
+Install Yeoman
+
+$ npm install -g yo
+$ npm install -g generator-webapp
+
+-----------------------------
+Instalar foundation
+
+$ npm install --global foundation-cli
+
+-----------------------------
+
+Install Bower
+
+$ npm install -g bower
+
+----------------------------
+Install Type Script
+
+npm install -g typescript
+npm install -g typings
+
+-----------------------------
+
+Install Gulp
+
+$ npm install --global gulp-cli
+
+** Instalando o Gulp em um projeto
+$ npm install --save-dev gulp
+
+----------------------------
+
+Install Grunt
+
+$ npm install -g grunt-cli
+$ npm install -g grunt-init
+
+Install Templates Grunt
+
+grunt-init-jquery
+$ git clone https://github.com/gruntjs/grunt-init-jquery.git ~/.grunt-init/jquery
+
+grunt-init-commonjs
+$ git clone https://github.com/gruntjs/grunt-init-commonjs.git ~/.grunt-init/commonjs
+
+grunt-init-gruntfile
+$ git clone https://github.com/gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile
+
+grunt-init-gruntplugin
+$ git clone https://github.com/gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin
+
+grunt-init-node
+$ git clone https://github.com/gruntjs/grunt-init-node.git ~/.grunt-init/node
+
+********************
+
+Criando novo projeto front-end
+
+Criar package.json
+$ npm init
+
+Instalar o grunt e suas dependencias
+$ npm install grunt --save-dev
+
+Criar Gruntfile.js
+$ grunt-init gruntfile
+
+Instalar os plugins do grunt
+
+$ npm install grunt-contrib-concat --save-dev
+$ npm install grunt-contrib-uglify --save-dev
+$ npm install grunt-contrib-nodeunit --save-dev
+$ npm install grunt-contrib-jshint --save-dev
+$ npm install grunt-contrib-watch --save-dev
+$ npm install grunt-contrib-compass --save-dev
+$ npm install grunt-contrib-imagemin --save-dev
+$ npm install grunt-sass --save-dev
+$ npm install grunt-contrib-htmlmin --save-dev
+$ npm install grunt-contrib-cssmin --save-dev
+$ npm install grunt-contrib-clean --save-dev
+$ npm install grunt-contrib-copy --save-dev
+$ npm install grunt-reload --save-dev
+$ npm install grunt-browser-sync --save-dev
+$ npm install grunt-express --save-dev
+
+
+
+********************
+
+Criando novo projeto front-end com angular 2
+
+$ npm install -g angular-cli
+$ ng new project_name
+$ cd project_name
+$ npm update --save #atualizar as bibliotecas no package.json  
+$ npm installl
+$ ng serve
+
+--- ou ---
+
+Detalhes em https://github.com/angular/quickstart
+
+$ git clone  https://github.com/angular/quickstart  my-proj
+$ cd my-proj
+$ rm -rf .git
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+$ git remote add origin <repo-address>
+$ git push -u origin master
+$ git remote add origin <repo-address>
+$ git push -u origin master
+$ npm run typings -- install
+
+
+
