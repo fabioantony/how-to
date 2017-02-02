@@ -379,11 +379,34 @@ Exemplo de criação de tabela com chave estrangeira
 		$table->unique('slug');
 		$table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 	})
+	
+	
+------
+
+exemplo de where compostos, procura primeiro o id 3, caso não encontre procura onde o created at é null.
+
+	DB::table('posts')->where('id', 3)->orWhere(function ($query){ $query->whereNull('created_at');})->get()
 
 
+Usando o join
 
+	DB::table('users')->join('posts', 'users.id', '=', 'posts.user_id')->get()
+	
+Usando o join com select
 
+	DB::table('users')->join('posts', 'users.id', '=', 'posts.user_id')->select('users.name','posts.title')->get()
 
+Multiplos Joins
+
+	DB::table('users')->join('posts', 'users.id', '=', 'posts.user_id')->select('users.name','posts.title')->join('comments', 'users.id', '=', 'comments.user_id')->get()
+
+Left Join
+
+	DB::table('users')->leftJoin('posts', 'users.id', '=', 'posts.user_id')->get()
+
+right Join
+
+	DB::table('users')->rightJoin('posts', 'users.id', '=', 'posts.user_id')->get()
 
 
 
