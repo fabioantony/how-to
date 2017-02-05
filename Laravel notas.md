@@ -58,10 +58,6 @@ Iniciar o Tinker
 
 	php artisan tinker
 	
-Exemplo de uso de um Model no Tinker
-
-	$user = App\User::create(['name'=> 'beltrano', 'email' => 'cicrano@email.com', 'password'=>bcrypt('mypassword')])
-	
 No tinker então você pode acessar os dados do usuário
 
 	$user->name;
@@ -407,6 +403,280 @@ Left Join
 right Join
 
 	DB::table('users')->rightJoin('posts', 'users.id', '=', 'posts.user_id')->get()
+	
+Union (Resultados Distintos)
+
+    $first = DB::table('posts')->whereNull('created_at')
+    DB::table('posts')->whereNull('updated_at')->union($first)->get()
+    
+Union All (Resultados NÃO Distintos)
+
+    $first = DB::table('posts')->whereNull('created_at')
+    DB::table('posts')->whereNull('updated_at')->unionAll($first)->get()
+    
+#### Join Avançado
+
+Join e function
+
+    DB::table('users')->join('posts', function($join){ 
+        $join->on('users.id', '=', 'posts.user_id')->whereNull('posts.created_at');
+    })->select('users.name', 'posts.title')->get()
+    
+    
+    DB::table('users')->join('posts', function($join){
+        $join->on('users.id', '=', 'posts.user_id')->whereNotNull('posts.created_at');
+    })->select('users.name', 'posts.title')->get()
+    
+#### Seeding
+
+Criar seeding
+
+    php artisan make:seeder NomeDoSeeder
+    
+Registrar a Classe Seeder no metodo run em 
+    
+    database/seeds/DatabaseSeeder.php
+
+Rodar no Terminal o Composer dump-autoload
+    
+    composer dump-autoload
+    
+Executando seed
+
+    php artisan db:seed
+    
+Rodando um seeder especifico
+
+    php artisan db:seed --class=NomeDoSeeder
+    
+Remove as Tabelas, Cria as Tabelas e executa o seed
+
+    php artisan migrate:refresh --seed
+    
+#### Operações basicas
+ 
+Criando um Moldel
+
+    php artisan make:model NomeDoModel
+    
+Criando um Model e junto sua Migration
+
+    php artisan make:model NomeDoModel --migration
+    
+# Active Record
+
+## Fillable
+
+Todos os campos que serão inseridos ou editados atres de metodos como create ou update precisan estar na variavel fillable do ActiveRecord isso é uma proteção contra 'mass assignment'
+    
+    protected $fillable = ['title', 'body'];   
+
+## Guarded
+   
+Funciona de maneira inversa ao fillable neste parametro do active record registramos os campus que não podem ser alterados.
+    
+    protected $guarded = ['id', 'created_at', 'updated_at']
+    
+Importante use fillable ou guarded nunca os dois juntos.
+        
+Criando um active record 
+   
+    $post = new App\Post;
+    $post->title = 'First Post'
+    $post->body = 'This is my first post'
+    $post->save //Return bool
+    $post // agora é os dados do post
+    
+Listando todos os registro do bd de um active record
+
+    App\Post::all()
+    
+Where No Active Recorde
+        
+    // Com get Retorna todos os registros    
+    App\Post::where('type', 'text')->get()
+     
+    // Com first Retorna somente o primeiro registro no caso a primeira linha
+    App\Post::where('type', 'text')->first() 
+    
+    // Com first e o order by podemos retornar apenas o ultimo registro
+    App\Post::where('type', 'text')->orderBy('created_at', 'desc')->first() 
+    
+Pegar Um registro atraves de um id
+
+    App\Post::find(1)
+    
+Editando um registro
+
+    $first = App\Post::find(1);
+    $first->title = 'First Post Edited';
+    $first->save();
+    
+Deletando um Registro
+    
+    $first = App\Post::find(1);
+    $first->delete();
+    
+Retornando exception caso um registro não exista
+
+    App\Post::find(1) // retorna null
+    App\Post::findOrFail(1) // lança uma exception
+    
+O Methodo Create pode inserir uma linha no banco
+
+	$user = App\User::create([
+	    'name'=> 'beltrano',
+	    'email' => 'cicrano@email.com',
+	    'password'=>bcrypt('mypassword')
+	])
+	
+# Convenções dos Models
+
+- Não precisamos digitar o nome da tabela do model
+- Considera o Nome da chave primaria como id
+- As classes tem nome CamelCase e tem seu nome equivalente na tabela de bancos de dados convertidos para nome_models com o s no final para indicar plural
+
+## Mudando as Convenções
+
+Podemos estabelecer o nome da tabela como a propridade abaixo
+
+    protected $table = 'nome_da_tabela'
+	
+Podemos estabelecer o nome da Chave Primaria com a propriedade abaixo
+
+    protected $primaryKey = 'primary_key_id'
+    
+Caso você não use o created_at e o updated_at é bom desativar os timestamps() com a propriedade abaixo ou o laravel ira continuar procurando por eles
+
+    public $timestamps =  false
+    
+Mudando a coneção padrão para um model especifico
+ 
+    protected $connection = 'sqlite';
+    
+Usando um object Carbon onde existe um timestamp para trabalhar melhor com datas
+ 
+    protected $dates = ['created_at', 'updated_at'] ;
+    
+## Accessors    
+
+Accessors são funções que modificam as informações do banco de dados antes de apresenta-las ao usuário    
+    
+## Muttators    
+
+São funções que modificam as informações antes de serem inseridas no banco de dados
+
+### Definando ambos
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = strtolower($value);
+    }
+
+    public function getTitleAttribute($value)
+    {
+        return ucfirst($value);
+    }
+        
+### Casting
+
+Retorna os dados do banco de dado não como string mas como o tipo que você estabelecer
+
+    protected $casts = [
+        'is_complete' => 'boolean',
+        'age' => 'integer',
+        'price' => 'double',
+        'created_at' => 'datetime',
+        'birthday' => 'date',
+        'name' => 'string',
+    ];
+    
+### Scoping
+
+Facilita consultas longas que são muita repetidas no sistema
+
+    public function scopeText($quey){
+        $query->where('type', 'text');
+    }
+    
+usando o Scope
+
+    App\Post::text()->get()
+
+Outro ex.
+
+    public function scopeOfText($quey, $type){
+        $query->where('type', $type);
+    }
+    
+usando o Scope
+
+    App\Post::ofType('text')->get()
+    
+#### Scoping Global
+
+O scope global aplicara implicidamente este filtro a qualquer consulta, Em um model
+
+    use Illuminate\Database\Eloquent\Builder;
+    use Carbon\Carbon;
+    ...
+    
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('published', function (Builder $builder){
+            $builder->where('published_at', '<', Carbon::now()->format('Y-m-d H:i:s'));
+        })
+    }
+    
+    
+Então para realizar uma consulta sem que este scope seja aplicado
+
+    App\Post::withoutGlobalScope('published')->get()
+    
+Se ouver mais de um scopo use um array
+
+    App\Post::withoutGlobalScope(['published', 'another_scope'])->get()
+    
+
+## Soft Deleting
+
+Na migration colocar o seguinte campo
+        
+    $table->softDeletes();
+    
+No model 
+
+    use Illuminate\Database\Eloquent\SoftDeletes;
+    
+    ...
+    
+    protected $dates = ['created_at', 'udpated_at', 'deleted_at'];
+
+Pegando todos os registros mesmo os excluidos
+    
+    App\Post::withTrashed()->get()
+    
+Pegando somente registros excluidos
+
+    App\Post::onlyTrashed()->get()
+    
+Verificando se um registro foi excluido
+
+    $post->trashed(); // retorna um boolean
+
+Recuperando Registro excluido
+
+    //instanciamos o registro
+    $post = App\Post::withTrashed()->find(1)
+        
+    //recuperamos o registro
+    $post->restore;
+    
+
+
+
+
 
 
 
