@@ -673,6 +673,11 @@ Recuperando Registro excluido
     //recuperamos o registro
     $post->restore;
     
+### Relações entre tabelas
+
+
+
+    
 
 
 
