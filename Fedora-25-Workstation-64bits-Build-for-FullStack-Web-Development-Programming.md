@@ -1,4 +1,4 @@
-##Fedora Workstation 64bits Build for PHP Programming
+##Fedora 25 Workstation 64bits Build for FullStack Web Development Programming
 
 Update Fedora
 
@@ -11,13 +11,33 @@ $ reboot
 
 ****************************************************************
 
+Depois desse comando alguns pacotes ja viram instalados em portugues (ex.: libre office)
+
+
+```bash
+
+sudo dnf install -y system-config-language
+
+
+```
+
+Depois execute, o comando abaixo e selecione o idioma
+
+```bash
+
+system-config-language
+
+```
+
+****************************************************************
+
 Install RPMFusion Repositories
 
 ```bash
 
 $ su -
 
-$ rpm --import "http://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-24" "http://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-24"
+$ rpm --import "http://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-25" "http://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-25"
 
 $ dnf install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
@@ -106,7 +126,7 @@ Install PHP environment
 
 ```bash
 
- $ dnf -y install libtool httpd mariadb-server php php-mysql php-gd php-mcrypt php-mbstring php-pear php-pecl-xdebug php-pear-PhpDocumentor php-phpunit-PHPUnit apigen git git-gui composer vagrant
+ $ dnf -y install libtool httpd mariadb-server php php-gd php-mcrypt php-mbstring php-pear php-pecl-xdebug php-pear-PhpDocumentor php-phpunit-PHPUnit apigen git git-gui composer vagrant
 
 ```
 
@@ -121,6 +141,7 @@ $ sudo systemctl enable httpd
 $ systemctl status httpd # check status
 $ ifconfig | grep inet #get your localhost ip
 $ sudo chmod -R a+w /var/www
+// Em caso de problema de permissão na pasta www
 $ sudo /sbin/restorecon -R /var/www/ #SELinux
 
 ```
@@ -169,6 +190,57 @@ Configure Composer
 $ composer config --global github-oauth.github.com YOUR_TOKEN
 
 ```
+****************************************************************
+
+Install Ruby on Rails
+
+```bash
+
+$ sudo dnf group install -y "C Development Tools and Libraries"
+$ sudo dnf install -y gcc libxml2-devel sqlite-devel ruby ruby-devel 
+$ sudo dnf install -y rubygem-rails
+$ sudo dnf group install -y 'Ruby on Rails'
+
+$ ruby -v
+$ rails -v
+
+```
+
+****************************************************************
+
+Gem Tools
+
+```bash
+
+$ sudo gem update --system
+//Sass
+$ sudo su -c "gem install sass"
+//Compass
+$ sudo gem install compass
+
+```
+
+****************************************************************
+
+NodeJS
+
+```bash
+
+$ sudo dnf install nodejs
+$ npm -v
+
+```
+****************************************************************
+
+Node Tools
+
+```bash
+su -
+npm install -g yo generator-webapp foundation-cli bower typescript typings gulp-cli grunt-cli grunt-init @angular/cli
+
+```
+
+
 
 ****************************************************************
 
@@ -180,7 +252,7 @@ Install MySql WorkBench Community
 $ sudo dnf install -y libuuid-devel boost-devel pcre-devel unixODBC-devel gdal-devel libxml2-devel libzip-devel gdk-pixbuf2-devel glibmm24-devel pango-devel cairo-devel gtk2-devel gtkmm24-devel vsqlite++-devel tinyxml-devel python-libs python-paramiko autoconf automake libtool gcc-c++ pkgconfig libncurses.so.5
 
 #Mysql Workbench
-$ sudo rpm -ivh http://cdn.mysql.com//Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.fc24.x86_64.rpm
+$ sudo rpm -ivh https://cdn.mysql.com//Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1.fc25.x86_64.rpm
 
 ```
 
@@ -193,9 +265,9 @@ Install java JDK 64
 $su -
 
 #check last version before
-$ wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.rpm
+$ wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.rpm
 
-$ rpm -Uvh jdk-8u111-linux-x64.rpm
+$ rpm -Uvh jdk-8u121-linux-x64.rpm
 
 #java
 $ alternatives --install /usr/bin/java java /usr/java/latest/jre/bin/java 200000
@@ -218,7 +290,6 @@ $ alternatives --config javac
 #Check instalation
 $ java -version
 $ javac -version
-$ javaws
 
 ```
 
@@ -238,7 +309,8 @@ $ sudo chmod +x netbeans-8.2-linux.sh
 #note: JDK Path /usr/java/latest
 #note: GlassFish Install Path /usr/local/GlassFish
 #note: NetBeans Install Path /usr/local/NetBeans
-$ netbeans-8.1-linux.sh 
+$ ./netbeans-8.2-linux.sh 
+$ rm netbeans-8.2-linux.sh 
 
 ```
 
@@ -249,14 +321,27 @@ Install PHPStorm IDE
 ```bash
 
 #check last version
-$ wget https://download-cf.jetbrains.com/webide/PhpStorm-2016.3.tar.gz
-$ tar -vzxf PhpStorm-2016.3.tar.gz
-$ rm PhpStorm-2016.3.tar.gz
+$ wget https://download.jetbrains.com/webide/PhpStorm-2016.3.2.tar.gz
+$ tar -vzxf PhpStorm-2016.3.2.tar.gz
+$ rm PhpStorm-2016.3.2.tar.gz
 $ sudo mkdir /usr/local/PhpStorm
 $ sudo chown YOUR_USERNAME /usr/local/PhpStorm
 $ mv PhpStorm-* /usr/local/PhpStorm/
 $ sudo chmod +x /usr/local/PhpStorm/bin/phpstorm.sh
 $ /usr/local/PhpStorm/bin/phpstorm.sh
+
+```
+
+****************************************************************
+
+Install Atom IDE
+
+```bash
+
+$ cd ~ 
+$ wget https://atom.io/download/rpm
+$ mv rpm atom.x86_64.rpm
+$ sudo dnf install -y ./atom.x86_64.rpm
 
 ```
 
@@ -292,7 +377,7 @@ Install some useful programs
 
 ```bash
 
-$ sudo dnf install -y poedit wine unrar gimp vim umbrello
+$ sudo dnf install -y poedit wine unrar gimp vim
 
 ```
 
@@ -342,7 +427,7 @@ Common Programs
 ```bash
 
 #Scanner Utility
-$ dnf -y install xsane-common xsane 
+$ dnf -y install xsane-common xsane
 
 #Media Player
 $ dnf -y install vlc 
@@ -377,9 +462,6 @@ $ dnf -y install gnome-tweak-tool
 #App Gnome for Pomodoro Technique
 $ dnf -y install gnome-shell-extension-pomodoro
 
-#Encrypted Folders
-$ dnf -y install cryptkeeper
-
 #Copy Discs Utility
 $ dnf -y install brasero
 
@@ -397,15 +479,15 @@ Install Multifunction Printer (Example with epson l365)
 
 ```bash
 
-#print driver
+#print driverex
 $ sudo dnf install -y lsb #dependency
-$ sudo rpm -ivh https://download3.ebz.epson.net/dsc/f/03/00/03/45/41/d95c03482376873661d7a8d4c165b385cd082cf3/epson-inkjet-printer-201401w-1.0.0-1lsb3.2.x86_64.rpm
+$ sudo rpm -ivh https://download3.ebz.epson.net/dsc/f/03/00/05/46/82/06e9cc5e8942591287bd643aaa39fb75d497799e/epson-printer-utility-1.0.1-1lsb3.2.x86_64.rpm
 
 #scanner driver
-$ wget https://download2.ebz.epson.net/imagescanv3/fedora/latest1/rpm/x64/imagescan-bundle-fedora-24-1.1.13.x64.rpm.tar.gz
-$ tar -vzxf imagescan-bundle-fedora-24-1.1.13.x64.rpm.tar.gz
-$ chmod +x  imagescan-bundle-fedora-24-1.1.13.x64.rpm/install.sh
-$ imagescan-bundle-fedora-24-1.1.13.x64.rpm/install.sh
+$ wget https://download2.ebz.epson.net/imagescanv3/fedora/latest1/rpm/x64/imagescan-bundle-fedora-25-1.1.16.x64.rpm.tar.gz
+$ tar -vzxf imagescan-bundle-fedora-25-1.1.16.x64.rpm.tar.gz
+$ chmod +x  imagescan-bundle-fedora-25-1.1.16.x64.rpm/install.sh
+$ imagescan-bundle-fedora-25-1.1.16.x64.rpm/install.sh
 
 
 ```
