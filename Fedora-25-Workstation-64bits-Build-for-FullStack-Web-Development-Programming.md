@@ -429,6 +429,13 @@ Common Programs
 #Scanner Utility
 $ dnf -y install xsane-common xsane
 
+#Google Drive Cliente
+$ dnf install -y grive2
+(https://linuxcentro.com.br/linux/grive-2-o-substituto-do-grive-para-o-google-drive/)
+
+#Dropbox
+$ dnf install -y dropbox
+
 #Media Player
 $ dnf -y install vlc 
 
