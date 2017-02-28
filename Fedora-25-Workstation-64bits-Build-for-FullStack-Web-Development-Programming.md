@@ -126,7 +126,7 @@ Install PHP environment
 
 ```bash
 
- $ dnf -y install libtool httpd mariadb-server php php-gd php-mcrypt php-mbstring php-pear php-pecl-xdebug php-pear-PhpDocumentor php-phpunit-PHPUnit apigen git git-gui composer vagrant
+ $ dnf -y install libtool httpd mariadb-server php php-gd php-mcrypt php-mbstring php-pear php-pecl-xdebug php-pear-PhpDocumentor php-phpunit-PHPUnit php-mysqlnd apigen git git-gui composer vagrant
 
 ```
 
