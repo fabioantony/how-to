@@ -675,13 +675,366 @@ Recuperando Registro excluido
     
 ### Relações entre tabelas
 
+#### One to One
+
+Na classe que possui uma outra classa em ralação
+
+    public function possui()
+    {
+        return $this->hasOne(ModelPossuido::class, 'user_id') //user_id opcional
+    }
+    
+Na classe que é possuida por outra classe
+
+    public function possuidaPor()
+    {
+        return $this->belongsTo(Possui::class, 'user_id') //user_id opcional
+    }
+    
+Exemplo de Uso
+    
+    $possuida = $possui->possuida //Pode acessar como se fosse uma propriedade
+    
+    //agora posso udar a possuida como um objeto normal do laravel chamando os metodos do model
+    
+    $possuida->delete()
+
+#### One to many
+
+Classe que possui muitos
+
+    possuiMuitos()
+    {
+        return $this->hasMany(Possuida::class)
+    }
+
+Classe possuida por muitos
+
+    public function possuida()
+    {
+        return $this-belongsTo(PossuiMuitos::class)
+    }
+    
+Associando um registro existente
+
+    $possuida->possuida()->associate($possuiMuitas)
 
 
+#### Many to many
+
+Neste tipo de relação é necessario uma tabela pivo. Esta Tabela não precisa de um model
+
+Um post possui muitas tags, um tag possui muitos posts.
+
+Exemplo de tabela pivo a convenção para o nome é no singular e em ordem alfabetica
+
+    class CreatePostTagTable extends Migration
+    {
+        Schema::create('post_tag', function (Blueprint $table) {
+            $table->integer('post_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
+            
+            $table->primary(['post_id', 'tag_id']);
+            
+            $table->foreign('post_id')->references('id')->on('posts')
+                ->onDelete('cascade')->onUpdate('cascade');
+            
+            $table->foreign('tag_id')->references('id')->on('tags')
+                ->onDelete('cascade')->onUpdate('cascade');
+        });
+    }
+
+Exemplo de ralação no Model 
+    
+    class Post exetends Model
+    {
+        ...
+    
+        public function tags()
+        {
+            //os tres ultimos parametros poderiam ser omitidos pois seguem a convenção de nomeação
+            return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id') 
+        }
+      
+    }
+    
+    class Tag extends Model
+    {
+        ...
+        
+        public function posts()
+        {
+            return $this->belongsToMany(Post::class);
+        }
+    }
+        
+Atribuindo Tags ao Post
+
+    $post->tags()->attach([1, 2]) //Dentro do Attach a lista com os ids das tags
     
 
+Atribuindo Posts a task
+
+    $tag->posts()->attach([1, 2]) //Dentro do Attach a lista com os ids dos posts
+    
+RemovendoTags ao Post
+
+    $post->tags()->detach([1, 2]) //Dentro do detach a lista com os ids das tags
+
+Sync remove todos os vinculos anteriores e deixam apenas os que você estabelecer
+         
+    $post->tags()->sync([2]) //agora post tera apenas a tag 2
+    
+Timestamps na tabela pivo
+
+    // depois de adicionar a coluna na migration
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps()
+    }
+    
+Caso a tabela pivo tenha alguma outra coluna
+
+        // depois de adicionar a coluna na migration
+        public function tags()
+        {
+            return $this->belongsToMany(Tag::class)->withPivot('colun1', 'colun2')
+        }
+        
+Inserindo valores nos campos customizados
+
+        //em modelo funciona com sync attach e outros 
+        $post->tags()->sync([1 => ['colum1' => 'foo', 'colum2'=>'bar'], 2 => ['colum1' => 'foo', 'colum2'=>'bar']])
+    
+
+### campo nulo em uma migration
+
+    Schema::create ('posts', function (Blueprint $table) {
+        $table->integer('user_id')->unsigned()->nullable();
+    }
+    
+### unsigned
+
+Todos os tipos inteiros podem ter um atributo opcional (não padronizado) UNSIGNED. Tipo não assinado pode ser usado para permitir apenas números não negativos em uma coluna ou quando você precisa de um intervalo numérico superior maior para a coluna. Por exemplo, se uma coluna INT for UNSIGNED, o tamanho do intervalo da coluna é o mesmo, mas seus pontos de extremidade mudam de -2147483648 e 2147483647 para 0 e 4294967295.
+Quando devo usá-lo?
+
+Pergunte a si mesmo esta pergunta: Será que este campo sempre contém um valor negativo? 
+Se a resposta é não, então você quer um UNSIGNED tipo de dados.
+
+Um erro comum é usar uma chave primária que é um auto-incremento INT partir de zero, mas o tipo é SIGNED , nesse caso, você nunca mais vai tocar em nenhum dos números negativos e você está reduzindo o leque de possíveis id para metade .
+
+
+### Polymorphic
+
+Vamos supor que classes de tipos diferentes mantem um contrato em comun, 
+Neste exemplo temos um Model Like (e sua tabela) que representa o contrato likeable.
+A relação é uma classe qualquer pode ter muitos likes.
+
+A migration:
+
+    class CreateLikesTable extends Migration
+    {
+        public function up()
+        {
+            Schema::create('likes', function (Blueprint $table){
+                $table->increments('id');
+                $table->morphs('likeable'); //criara dua colunas likeable_id e likeable_table
+                $table->timestamps(); 
+            });
+        }
+    }
+    
+O Model
+    
+    class Like extends Model
+    {
+        public function likeable()
+        {
+            return $this->morphTo();
+        }
+    }
+    
+Os models que podem receber likes deve implementar uma função como a de baixo
+    
+    public function likes
+    {
+        $this->morphMany(Like::class, 'likeable')
+    }
+    
+Para atribuir likes funciona da mesma forma que relação de um para muitos
+ 
+    $model->likes()->create([])
+
+
+### Polymorphic many to many
+
+Neste exemplo voltamos ao exemplo das tags, existem muitas classes de tipos diferentes que podem uma ou mais tags, e um tags pode pertencer a diferentes classes e tipos
+
+Vamos precisar de uma tabela pivo chamada taggable
+
+    class CreateTaggablesTable extends Migration
+    {
+        public function up()
+        {
+            Schema::create('taggable', function(Blueprint $table) {
+                $table->integer('tag_id')->unsigned();
+                $table->morphs('taggable');
+            });
+        }
+    }
+    
+Não precisamos de um model para a tabela pivo, mas ainda precisamos de um model e tabela tag como exemplo many to many, vinculamos o taggable a um model de seguinte maneira
+
+    public function tags() {
+        return $this-morphToMany(Tag::class, 'taggable');
+    }
+
+No model tag todos as classes taggables precisam de sua própria função
+
+    class Tag extends Model
+    {
+        protected $fillable = ['name'];
+        public $timestamps = false;
+        
+        public function texts() 
+        {
+            return $this->morphedByMany(Text::class, 'taggable');
+        }
+        
+        public function images() 
+        {
+            return $this->morphedByMany(Image::class, 'taggable');
+        }
+    }
+
+Obtendo tags
+
+    $text->tags()->sync([1, 2])
+    $tag->texts
 
 
 
+#[Laravel - Eloquent](https://www.schoolofnet.com/curso-laravel-eloquent/)
+
+## Operações Básicas
+
+criando um model e sua seed ao mesmo tempo
+
+    php artisan make:model Nome --migration
+
+## Mass assigned
+
+para usarmos o metodo create os parametros precisam estar registrados no model na propriedade fillable ou na lista de exclusão guarded.
+
+## Convenções
+
+Model em CamelCase tabela em snake_case
+
+    protected $table = 'nome_da_tabela';
+
+Chave primária sera 'id'
+
+    protected $primaryKey = 'nome_id';
+
+Todos os model tem timestamps
+
+    public $timestamps = false;
+    
+Tabela fora da coneccção padrão
+
+    protected $connection = 'sqlite';
+    
+Carbon nos campos data
+
+    protected $dates = ['created_at', 'updated_at', 'published_at'];
+    
+## Mutators
+
+Nos models  podem ser inseridos os metodos de acesso de um atributo
+
+tratando um atributo que sera inserido no bd
+
+    public function setTitleAttribute($value) 
+    {
+        $this->attributes['title'] = strtolower($value);
+    }
+    
+tratando um valor pego do bd
+
+    public function gatTitleAttribute($value) 
+    {
+        return ucfirst($value);
+    }
+
+tipos de valores ou attribute casting
+
+    protected $casts = [
+        'is_true' => 'boolean',
+        'created_at' => 'datetime',
+    ]
+    
+## Scopes    
+
+você pode criar funções dentro dos models para executar consultas especificas
+
+    public function scopeText($query) {
+        return $query->where('type', 'text')
+    }
+    
+Agora podemos executar a query chamando o metodos do model
+
+    App\Model::text()->get()
+    
+Também podemos usar parametros 
+
+    public function scopeText($query, $type) {
+        return $query->where($type, 'text')
+    }
+    ...
+   
+    App\Model::text()->get('text')
+   
+Scopo global
+    
+    protected static function boot()
+    {
+        parent::boot()
+        
+        static::addGlobalScope('published', function (Builder $builder){
+            $builder->where(...);
+        });
+    }
+    
+    agora qualquer consulta tem retornara de acordo o scope
+        
+        
+# [Laravel Eventos e filas](/var/www/curso-ministrado-pela-school-of-net-banco-de-dados-e-eloquent)
+
+## Criando e disparando eventos simples
+
+Os eventos são registrados no metodo boot arquivo
+
+    app/Providers/EventServiceProvider
+    
+# Erros comuns
+
+ [Illuminate\Database\QueryException]                                                                                     
+  SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes (SQL: a  
+  lter table `users` add unique `users_email_unique`(`email`))     
+
+
+Index Lengths & MySQL / MariaDB
+
+Laravel uses the utf8mb4 character set by default, which includes support for storing "emojis" in the database. If you are running a version of MySQL older than the 5.7.7 release or MariaDB older than the 10.2.2 release, you may need to manually configure the default string length generated by migrations in order for MySQL to create indexes for them. You may configure this by calling the Schema::defaultStringLength method within your AppServiceProvider:
+
+    use Illuminate\Support\Facades\Schema;
+
+    public function boot()
+    {
+        Schema::defaultStringLength(191);
+    }
+
+Alternatively, you may enable the innodb_large_prefix option for your database. Refer to your database's documentation for instructions on how to properly enable this option.
 
 
 
