@@ -1,14 +1,14 @@
-##Debian 9 Stretch 64bits Build for FullStack Web Development Programming
+Debian 9 Stretch 64bits Build for FullStack Web Development Programming
 
 ---------------------
 
-####Add Non-free
+Add Non-free
 
 Use your favourite text editor and edit /etc/apt/sources.list by adding non-free contrib
 
 ---------------------
 
-####Atualização
+Atualização
 
 ```bash
 $ apt update
@@ -16,7 +16,7 @@ $ apt upgrade
 ```
 ----------------------
 
-####Add Usuário ao Sudo
+Add Usuário ao Sudo
 
 ```bash
 $ usermod -a -G sudo <username>
@@ -24,7 +24,7 @@ $ usermod -a -G sudo <username>
 
 ----------------------
 
-####VirtualBox
+VirtualBox
 
 
 Adicionar esta fonte ao repositórios no arquivo /etc/apt/sources.list
@@ -51,14 +51,14 @@ $ apt install -y virtualbox-5.1
 
 
 ---------------------
-####Nvidia Drivers
+Nvidia Drivers
 
 ```bash
 $ apt install nvidia-driver
 ```
 ---------------------
 
-####Google Chrome
+Google Chrome
 
 ```bash
 $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -73,7 +73,7 @@ $ apt --fix-broken install
 
 --------------------
 
-####Dropbox
+Dropbox
 
 ```bash
 $ apt install nautilus-dropbox
@@ -81,7 +81,7 @@ $ apt install nautilus-dropbox
 
 ----------------
 
-####Clamav
+Clamav
 
 ```bash
 $ sudo apt-get install clamav clamtk
@@ -102,14 +102,14 @@ $ sudo rm /var/log/clamav/freshclam.log
 
 ------------------
 
-####PHP environment
+PHP environment
 
 ```
 $ sudo apt -y install php7.0 php7.0-common php7.0-interbase php7.0-bz2 php7.0-curl php7.0-zip php7.0-xsl php7.0-xmlrpc php7.0-xml php7.0-mysql php7.0-mbstring php7.0-mcrypt php7.0-soap php7.0-sqlite3 php7.0-gd php7.0-pgsql libtool mysql-server phpunit phpdox php-xdebug php-apigen composer vagrant git git-gui
 ```
 ---------------
 
-####Config MySql
+Config MySql
 
 ```bash
 $ sudo systemctl status mysql
@@ -118,7 +118,7 @@ $ sudo mysql_secure_installation #yes for all
 
 --------------
 
-####Config PHP
+Config PHP
 
 ```bash
 $ sudo vim 	/etc/php/7.0/cli/php.ini
@@ -148,7 +148,7 @@ upload_max_filesize = 200M
 9) Check Php extensions.
 --------------
 
-####Configure Git
+Configure Git
 
 ```bash
 $ git config --global user.name “YOUR_USERNAME”
@@ -157,7 +157,7 @@ $ git config --global user.email “YOUR@EMAIL.COM”
 
 -------------
 
-####Configure Composer
+Configure Composer
 
 ```bash
 $ composer config --global github-oauth.github.com YOUR_TOKEN
@@ -165,7 +165,7 @@ $ composer config --global github-oauth.github.com YOUR_TOKEN
 
 -------------
 
-####Install PHPStorm IDE
+Install PHPStorm IDE
 
 check last version
 
@@ -182,19 +182,19 @@ $ /usr/local/PhpStorm/bin/phpstorm.sh
 
 ---------------
 
-####www
+www
 ```bash
 sudo chown -R YOUR_USERNAME /var/www
 ```
 ---------------
 
-####Astah
+Astah
 
 http://cdn.change-vision.com/files/astah-community-7.1.0.f2c212-0_all.deb
 
 ---------------
 
-####Install java JDK 64
+Install java JDK 64
 
 ```bash
 $su -
@@ -228,7 +228,7 @@ $ javac -version
 ```
 
 ----------------------
-####NVM
+NVM
 
 ```bash
 $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
@@ -237,7 +237,7 @@ $ [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 $ nvm --version
 ```
 ----------------------
-####Node
+Node
 
 ```bash
 $ nvm install node
@@ -247,7 +247,7 @@ $ npm -v
 
 ----------------------
 
-####Install TypeScript
+Install TypeScript
 
 ```bash
 $ npm install -g typescript
@@ -256,7 +256,7 @@ $ tsc -v
 
 ----------------------
 
-####Install Angular Cli
+Install Angular Cli
  
 ```bash
 $ npm install -g @angular/cli
@@ -265,7 +265,7 @@ $ ng -v
 
 ----------------------
 
-####Printer Epson EcoTank L365
+Printer Epson EcoTank L365
 
 1)Requiriments
 
@@ -294,7 +294,7 @@ $ rm imagescan-bundle-debian-9-1.3.23.x64.deb.tar.gz
 
 -------------
 
-####AngrySearch
+AngrySearch
 
 ```bash
 $ sudo apt install python3-pyqt5
@@ -307,7 +307,7 @@ $ rm -R ANGRYsearch
 
 -----------
 
-####Kdenlive
+Kdenlive
 
 ```bash
 $ sudo apt install kdenlive breeze frei0r-plugins breeze-icon-theme
@@ -325,7 +325,7 @@ Deixe marcado force  Breeze Icon Theme
 
 -------------
 
-####Laravel Installer
+Laravel Installer
 
 ```bash
 $ composer global require "laravel/installer"
@@ -346,7 +346,7 @@ $ ln -s /home/raoni/.config/composer/vendor/laravel/spark/spark ~/.config/compos
 
 ----
 
-####Atom Ide
+Atom Ide
 
 ```bash
 $ wget https://atom.io/download/deb -O atom.deb
@@ -371,7 +371,7 @@ Extenções
 
 ----
 
-####Zoom videoconferencia
+Zoom videoconferencia
 
 ```bash
 $ wget https://d11yldzmag5yn.cloudfront.net/prod/2.0.115900.1201/zoom_amd64.deb
@@ -383,7 +383,7 @@ $ sudo dpkg -i zoom_amd64.deb
 
 -------
 
-####Update vagrant
+Update vagrant
 
 ```bash
 $ sudo dpkg -i  vagrant_2.0.4_x86_64.deb
