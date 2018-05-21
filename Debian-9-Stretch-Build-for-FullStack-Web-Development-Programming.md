@@ -6,6 +6,16 @@ Add Non-free
 
 Use your favourite text editor and edit /etc/apt/sources.list by adding non-free contrib
 
+```bash
+deb http://ftp.br.debian.org/debian/ stretch main non-free contrib
+deb-src http://ftp.br.debian.org/debian/ stretch main non-free contrib
+deb http://security.debian.org/debian-security stretch/updates main non-free contrib
+deb-src http://security.debian.org/debian-security stretch/updates main non-free contrib
+deb http://ftp.br.debian.org/debian/ stretch-updates main non-free contrib
+deb-src http://ftp.br.debian.org/debian/ stretch-updates main non-free contrib
+deb http://download.virtualbox.org/virtualbox/debian stretch contrib
+```
+
 ---------------------
 
 Atualização
