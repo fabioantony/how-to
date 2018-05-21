@@ -351,7 +351,7 @@ $ cd ~/.config/composer/vendor/laravel/
 $ mv spark-intaller spark
 $ cd spark
 $ composer install
-$ ln -s /home/raoni/.config/composer/vendor/laravel/spark/spark ~/.config/composer/vendor/bin/spark
+$ ln -s ~/.config/composer/vendor/laravel/spark/spark ~/.config/composer/vendor/bin/spark
 ```
 
 ----
