@@ -183,32 +183,30 @@ $ java -version
 $ javac -version
 
 ----------------------
+NVM
 
-Install NodeJS
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+$ export NVM_DIR="$HOME/.nvm"
+$ [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+$ nvm --version
+----------------------
+Node
 
-# - requires given command to be executed with root privileges either directly as a root user or by use of sudo command
-$ - given command to be executed as a regular non-privileged user
-
-$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-# sudo apt install nodejs
-# sudo apt install build-essential libssl-dev
-$ npm install express
+$ nvm install node
 $ node -v
 $ npm -v
-
-
------------------------
+----------------------
 
 Install TypeScript
 
-$ sudo npm install -g typescript
+$ npm install -g typescript
 $ tsc -v
 
 ----------------------
 
 Install Angular Cli
  
-$ sudo npm install -g @angular/cli
+$ npm install -g @angular/cli
 $ ng -v
 
 ----------------------
@@ -309,6 +307,28 @@ Extenções
     Git-Aware
     Command Palette: https://atom.io/packages/command-palette
 
+----
+
+Zoom videoconferencia
+
+$ wget https://d11yldzmag5yn.cloudfront.net/prod/2.0.115900.1201/zoom_amd64.deb
+$ sudo apt install libgstreamer-plugins-base1.0-0 libglib2.0-0 libxcb-shape0 libxcb-shm0 libxcb-xfixes0 libxcb-randr0 libxcb-image0 libfontconfig1 libgl1-mesa-glx libxi6 libsm6 libxrender1 libpulse0 libxcomposite1 libxslt1.1 libsqlite3-0 libxcb-keysyms1 libxcb-xtest0
+$ sudo dpkg -i zoom_amd64.deb
+$ sudo apt-get -f install
+$ sudo dpkg -i zoom_amd64.deb
+
+-------
+
+Update vagrant
+
+
+sudo dpkg -i  vagrant_2.0.4_x86_64.deb
+
+Comandos Uteis
+
+vagrant plugin repair
+vagrant plugin expunge --reinstall
+vagrant plugin update
 
 
 
